@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use App\Models\Ablum;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,10 @@ Route::middleware(['auth'])->group(function () {
     })
         ->name('ablum.edit')
         ->middleware('can:view,ablum');
+
+    Route::get('profile/{user}', function (User $user) {
+        return view('profile.index', compact('user'));
+    })->name('profile');
 });
 
 require __DIR__ . '/auth.php';

@@ -4,17 +4,19 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class Profile extends Component
+class Newsfeed extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public $user;
-    public function __construct($user)
+    public $ablums;
+    public function __construct($ablums)
     {
-        $this->user = $user;
+        //here goes the newsfeed ablum the user who are follows
+
+        $this->ablums = $ablums;
     }
 
     /**
@@ -24,6 +26,6 @@ class Profile extends Component
      */
     public function render()
     {
-        return view('components.profile');
+        return view('components.newsfeed');
     }
 }

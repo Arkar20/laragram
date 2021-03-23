@@ -48,8 +48,8 @@
     @endforelse
       
         </div>
-        <x-profile />
     </div>
+    <x-profile :user="auth()->user()"/>
 </div>
 </div>
 </div>

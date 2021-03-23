@@ -35,7 +35,11 @@ class AblumCreate extends Component
 
     public function storeAblum()
     {
-        $imgname = date('dd-mm-y') . '' . $this->image->getClientOriginalName();
+        $this->validate();
+        if ($this->image) {
+            $imgname =
+                date('dd-mm-y') . '' . $this->image->getClientOriginalName();
+        }
         Ablum::create([
             'name' => $this->ablum,
             'slug' => $this->desc,

@@ -2,19 +2,20 @@
 
 namespace App\View\Components;
 
+use App\Models\Image;
 use Illuminate\View\Component;
 
-class Profile extends Component
+class Gallary extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public $user;
-    public function __construct($user)
+    public $photos;
+    public function __construct($photos)
     {
-        $this->user = $user;
+        $this->photos = $photos;
     }
 
     /**
@@ -24,6 +25,6 @@ class Profile extends Component
      */
     public function render()
     {
-        return view('components.profile');
+        return view('components.gallary');
     }
 }

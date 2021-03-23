@@ -1,5 +1,5 @@
     <x-app-layout>
-       
+       <x-alert-message />
         <div class="md:py-12 sm:py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class=" overflow-hidden shadow-sm sm:rounded-lg">
@@ -7,10 +7,10 @@
                 <div class=" flex justify-center m-3">
                     <div class="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl w-full">
 
-                        <x-newsfeed :ablums="auth()->user()->ablums"/>
+                        <x-newsfeed :ablums="$user->ablums"/>
                     </div>
                         <div>
-                         <x-profile :user="auth()->user()"/>
+                         <x-profile :user="$user"/>
                            
                                 </div>
                     </div>

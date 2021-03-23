@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Ablum;
+use App\Models\Follower;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,5 +40,45 @@ class User extends Authenticatable
     public function ablums()
     {
         return $this->hasMany(Ablum::class);
+    }
+    public function following()
+    {
+        return $this->hasMany(User::class, 'follwering_id', 'id');
+    }
+
+    public function follow($userid)
+    {
+        return Follower::create([
+            'follower_id' => $this->id,
+            'following_id' => $userid,
+        ]);
+    }
+    public function isFollow($userId)
+    {
+        return DB::table('followers')
+            ->where('follower_id', $this->id)
+            ->where('following_id', $userId)
+            ->exists();
+    }
+    public function unfollow($userId)
+    {
+        return DB::table('followers')
+            ->where('follower_id', $this->id)
+            ->where('following_id', $userId)
+            ->delete();
+    }
+    public function getFollowingUsers()
+    {
+        return DB::table('followers')
+            ->where('follower_id', $this->id)
+            ->get();
+
+        // return $this->hasManyThrough(Follower::class, User::class,'');
+    }
+    public function myFollowers()
+    {
+        return DB::table('followers')
+            ->where('following_id', $this->id)
+            ->get();
     }
 }

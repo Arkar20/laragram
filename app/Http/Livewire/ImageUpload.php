@@ -14,20 +14,41 @@ class ImageUpload extends Component
 
     public $photos;
     public Ablum $ablum;
-    public $rules = [];
+    public $rules = ['photos' => 'required'];
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
     public function render()
     {
         return view('livewire.image-upload');
     }
     public function uploadPhotos()
     {
-        foreach ($this->photos as $photo) {
-            $imgname = uniqid() . '' . $photo->getClientOriginalName();
-
+        $this->validate();
+        if ($this->photos) {
             Image::create([
-                'image' => $photo->storeAs('public/photos', $imgname),
+                'image' => $this->photos->storeAs(
+                    'public/photos',
+                    uniqid() . '' . $this->photos->getClientOriginalName()
+                ),
                 'ablum_id' => $this->ablum->id,
             ]);
+
+            $this->ablum = Ablum::find($this->ablum->id);
+            $this->photos = '';
         }
+
+        $this->alert('success', 'Images uploaded Successful', [
+            'position' => 'bottom-end',
+            'timer' => 6000,
+            'toast' => true,
+            'text' => '',
+            'confirmButtonText' => 'Ok',
+            'cancelButtonText' => '&times;',
+            'showCancelButton' => true,
+            'showConfirmButton' => false,
+        ]);
     }
 }
