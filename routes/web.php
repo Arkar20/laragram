@@ -25,7 +25,9 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 
     Route::get('/', function () {
-        return view('photos.newsfeed');
+        return view('photos.newsfeed', [
+            'ablums' => auth()->user()->ablums,
+        ]);
     })->name('photos.newsfeed');
 
     Route::get('/ablum', function () {

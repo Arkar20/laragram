@@ -109,7 +109,8 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
-/******/ 			"/js/app": 0
+/******/ 			"/js/app": 0,
+/******/ 			"css/app": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -122,7 +123,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		
 /******/ 		// no HMR manifest
 /******/ 		
-/******/ 		__webpack_require__.O.j = (chunkId) => (true);
+/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
 /******/ 		
 /******/ 		// install a JSONP callback for chunk loading
 /******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {

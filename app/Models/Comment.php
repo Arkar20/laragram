@@ -15,7 +15,7 @@ class Comment extends Model
 
     public function ablum()
     {
-        return $this->hasOne(Ablum::class);
+        return $this->belongsTo(Ablum::class);
     }
     public function user()
     {

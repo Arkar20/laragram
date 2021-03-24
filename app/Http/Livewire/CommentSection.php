@@ -8,27 +8,37 @@ use Livewire\Component;
 
 class CommentSection extends Component
 {
+    public $ablum;
     public $comment;
-    public Ablum $ablum;
-    public $currentComment;
+    public $updatecmt;
+    public $textbox = false;
+    public $txtcomment;
+    public $txtcommentupdate;
     protected $rules = [
-        'comment' => ['required', 'min:5', 'max:255'],
+        'txtcomment' => ['required', 'min:5', 'max:255'],
     ];
+    protected $listeners = ['confirmed', 'cancelled'];
 
-    public function updated($attributes)
+    public function mount($ablum)
     {
-        $this->validateOnly($attributes);
+        $this->ablum = $ablum;
     }
+    public function render()
+    {
+        return view('livewire.comment-section', [
+            'comments' => $this->ablum->comments,
+        ]);
+    }
+
     public function addComment()
     {
         $this->validate();
 
-        $this->currentComment = Comment::create([
-            'comment' => $this->comment,
+        $datacmt = Comment::create([
+            'comment' => $this->txtcomment,
             'ablum_id' => $this->ablum->id,
             'user_id' => auth()->user()->id,
         ]);
-
         $this->alert('success', 'Commented', [
             'position' => 'bottom-end',
             'timer' => 6000,
@@ -40,15 +50,65 @@ class CommentSection extends Component
             'showConfirmButton' => false,
         ]);
 
-        $this->comment = '';
+        $this->txtcomment = '';
+        $this->ablum = Ablum::find($datacmt->ablum_id);
+    }
+    public function delete(Comment $comment)
+    {
+        $this->comment = $comment->id;
+        // dd($this->comment);
+        $this->confirm('Do you love Livewire Alert?', [
+            'toast' => false,
+            'position' => 'center',
+            'showConfirmButton' => true,
+            'cancelButtonText' => 'Nope',
+            'onConfirmed' => 'confirmed',
+            'onCancelled' => 'cancelled',
+        ]);
         $this->ablum = Ablum::find($this->ablum->id);
     }
+    public function confirmed()
+    {
+        // Example code inside confirmed callback
+        if ($this->comment) {
+            $comment = Comment::find($this->comment);
+            $comment->delete();
+        }
+
+        $this->alert('success', 'Comment Deleted');
+        $this->ablum = Ablum::find($this->ablum->id);
+    }
+
+    public function cancelled()
+    {
+        // Example code inside cancelled callback
+
+        $this->alert('info', 'Understood');
+    }
+
+    //edit
     public function edit(Comment $comment)
     {
-        $this->comment = $comment->comment;
+        $this->updatecmt = $comment->id;
+        $this->txtcommentupdate = $comment->comment;
     }
-    public function render()
+    public function updateCmt()
     {
-        return view('livewire.comment-section', ['ablum' => $this->ablum]);
+        $comment = Comment::find($this->updatecmt);
+        $comment->update([
+            'comment' => $this->txtcommentupdate,
+        ]);
+        $this->alert('success', 'Updated', [
+            'position' => 'bottom-end',
+            'timer' => 6000,
+            'toast' => true,
+            'text' => '',
+            'confirmButtonText' => 'Ok',
+            'cancelButtonText' => '&times;',
+            'showCancelButton' => true,
+            'showConfirmButton' => false,
+        ]);
+        $this->ablum = Ablum::find($this->ablum->id);
+        $this->updatecmt = 0;
     }
 }

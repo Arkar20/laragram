@@ -19,7 +19,7 @@ class AblumCreate extends Component
         'ablum' => 'required|min:3',
         'desc' => 'required|min:3',
         'categoryid' => 'required',
-        'image' => 'required|image|mimes:jpg',
+        'image' => 'required|image|mimes:jpg,png',
     ];
 
     public function render()

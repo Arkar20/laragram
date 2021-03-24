@@ -1,0 +1,33 @@
+<div>
+                <div class="text-sm mb-2 flex flex-start items-center">
+                    <div v-if="showUserImage">
+                        <a href="#" class="cursor-pointer flex items-center text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
+                            <img class="h-8 w-8 rounded-full object-cover"
+                            src="{{Storage::url($ablum->user->avatar)}}"
+                            alt="usuario" />
+                        </a>
+                    </div>
+                    
+                        <p class="font-bold ml-2">
+                        <a class="cursor-pointer">{{$ablum->user->name}}:</a>
+                        <span class="text-gray-700 font-medium ml-1">
+                            {{$comment->comment}}
+                        </span> 
+                    @can('view',$comment)
+                        
+                
+                                <span class="uppercase text-gray-300 cursor-pointer" wire:click="edit">Edit</span>
+                                    &middot;
+                        <span class="uppercase text-gray-300 cursor-pointer" wire:click="delete">delete</span>
+                            @endcan
+                                        
+                                </p>
+                            </div>
+                    {{-- @if ($textbox)
+                        <form class="my-2" wire:submit.prevent="">
+                                <input type="text" wire:model="txtupdatecmt" />
+                                <x-button>Update</x-button>
+                            </form>
+                    @endif --}}
+                
+             </div>
