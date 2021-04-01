@@ -9,11 +9,14 @@ class AblumShow extends Component
 {
     public $ablum;
     protected $listeners = ['confirmed', 'cancelled'];
+    public $user;
+    public function mount($user)
+    {
+        $this->user = $user;
+    }
     public function render()
     {
-        $ablums = Ablum::where('user_id', auth()->user()->id)
-            ->with('category')
-            ->get();
+        $ablums = $this->user->ablums;
 
         return view('livewire.ablum-show', compact('ablums'));
     }

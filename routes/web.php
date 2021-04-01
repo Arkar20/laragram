@@ -30,9 +30,14 @@ Route::middleware(['auth'])->group(function () {
         ]);
     })->name('photos.newsfeed');
 
-    Route::get('/ablum', function () {
-        return view('ablums.index');
-    });
+    Route::get('/profile/{user}', function (User $user) {
+        return view('ablums.index', compact('user'));
+    })->name('profile');
+    Route::get('/allphotos/{user}', function (User $user) {
+        return view('photos.allphoto', [
+            'user' => $user,
+        ]);
+    })->name('allphoto');
     Route::get('/ablum/create', function () {
         return view('ablums.create');
     });
@@ -46,9 +51,9 @@ Route::middleware(['auth'])->group(function () {
         ->name('ablum.edit')
         ->middleware('can:view,ablum');
 
-    Route::get('profile/{user}', function (User $user) {
-        return view('profile.index', compact('user'));
-    })->name('profile');
+    // Route::get('profile/{user}', function (User $user) {
+    //     return view('profile.index', compact('user'));
+    // })->name('profile');
 });
 
 require __DIR__ . '/auth.php';

@@ -81,4 +81,8 @@ class User extends Authenticatable
             ->where('following_id', $this->id)
             ->get();
     }
+    public function images()
+    {
+        return $this->hasManyThrough(Image::class, Ablum::class);
+    }
 }

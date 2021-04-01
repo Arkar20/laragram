@@ -5,13 +5,15 @@ namespace App\Http\Livewire;
 use App\Models\Ablum;
 use App\Models\Comment;
 use Livewire\Component;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CommentSection extends Component
 {
+    use AuthorizesRequests;
     public $ablum;
     public $comment;
     public $updatecmt;
-    public $textbox = false;
+    public $showeditbox = false;
     public $txtcomment;
     public $txtcommentupdate;
     protected $rules = [
@@ -21,6 +23,7 @@ class CommentSection extends Component
 
     public function mount($ablum)
     {
+        $this->authorize('view', $ablum);
         $this->ablum = $ablum;
     }
     public function render()
@@ -89,7 +92,13 @@ class CommentSection extends Component
     //edit
     public function edit(Comment $comment)
     {
-        $this->updatecmt = $comment->id;
+        if ($this->updatecmt != $comment->id) {
+            $this->showeditbox = true;
+            $this->updatecmt = $comment->id;
+        } else {
+            $this->showeditbox = !$this->showeditbox;
+            $this->updatecmt = $comment->id;
+        }
         $this->txtcommentupdate = $comment->comment;
     }
     public function updateCmt()

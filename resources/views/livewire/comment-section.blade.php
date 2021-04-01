@@ -3,15 +3,15 @@
     
 
 <div class="flex flex-start items-center my-4 space-x-3">   
-                <div class="flex-none avatar-img w-14 h-14 bg-gray-800 rounded-full">
-                    <img src="{{Storage::url(auth()->user()->avatar)}}"/>
+                <div class="flex-none avatar-img ">
+                                            <img src="{{Storage::url($ablum->user->avatar)}}" class="w-14 h-14 rounded-full object-cover"/>
                 </div>
                 <div class="name">
                     <p class="inline text-md text-gray-900 font-semibold">{{$comment->user->name}}</p>
                     <span class="text-sm font-light text-gray-500 cursor-pointer" wire:click="edit({{$comment->id}})">Edit</span>
                     
                     <span class="text-sm font-light text-gray-500 cursor-pointer" wire:click="delete({{$comment->id}})">Delete</span>
-                @if ($updatecmt==$comment->id)
+                @if ($updatecmt==$comment->id && $showeditbox)
                     <div class="block my-4">
                          <form class="flex justify-center mt-3" wire:submit.prevent='updateCmt'>
                                  <input wire:model="txtcommentupdate" class="w-full block resize-none outline-none rounded-md appearance-none p-2 border border-gray-700 mr-3" aria-label="Comment" placeholder="Comment"  autocomplete="off" autocorrect="off" style="height: 36px;"/>

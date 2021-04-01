@@ -9,10 +9,11 @@
                     <img src="{{Storage::url($ablum->image)}}" class="h-20 sm:h-32 object-cover w-full lg:h-60"/>
                     <div class="bg-white sm:text-sm flex  px-4 py-2">
                         <div class="profile ">
-                             <img  class="w-20 h-20 rounded-full mx-auto " src="{{Storage::url(auth()->user()->avatar)}}"/>
+                             <img  class="w-20 h-20 rounded-full mx-auto " src="{{Storage::url($ablum->user->avatar)}}"/>
                             <div class="mx-auto my-2 ">
-                                    <h4 class="text-center text-md tracking-wider uppercase text-gray-500">{{auth()->user()->name}}</h4>
-                                                <livewire:follow :user="$ablum->user"/>
+                                    <h4 class="text-center text-md tracking-wider uppercase text-gray-500">{{$ablum->user->name}}</h4>
+                                            
+                                    <livewire:follow :user="$ablum->user"/>
 
                                 </div>
                             
@@ -25,6 +26,7 @@
                 
                 </div>
                 {{-- start of form --}}
+                @can('view',$ablum)
                     <div class=" my-2 mx-6 bg-white rounded-lg text-xs sm:text-lg">
                             <form enctype="multipart/form-data" wire:submit.prevent="uploadPhotos" class="" >
                                     <label class="text-lg  tracking-wider">Image Upload</label>
@@ -65,8 +67,12 @@
                                     <span class="ml-2">upload the images</span>
                                 </x-button>
                             </form>
+                             
+                                        
+                                    
                            
                     </div>
+                    @endcan  
                 {{-- end of form --}}
               <x-gallary :photos="$ablum->photos"/>
     </div>

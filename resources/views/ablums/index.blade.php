@@ -7,7 +7,7 @@
                 <div class="  m-6  ">
      
                       
-                             <livewire:ablum-show />
+                             <livewire:ablum-show :user="$user"/>
                     </div>
                   
                 </div>

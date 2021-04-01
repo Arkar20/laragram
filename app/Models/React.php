@@ -7,11 +7,16 @@ use App\Models\Ablum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Image extends Model
+class React extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['image', 'ablum_id'];
+    protected $fillable = ['user_id', 'ablum_id', 'react'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function ablum()
     {

@@ -25,7 +25,9 @@
                     <li class="py-2 px-4 border border-grey-500 flex justify-around ">Abums <span class="px-3">{{$user->ablums->count()}}</span></li>
 
                   </a>
-                  <li class="py-2 px-4 border border-grey-500 flex justify-around ">Photos <span class="px-3">30</span></li>
+                  <a href="{{route('allphoto',$user->id)}}">
+                  <li class="py-2 px-4 border border-grey-500 flex justify-around ">Photos <span class="px-3">{{$user->images->count()}}</span></li>
+                  </a>
                 </ul>
             </div>
         </div>

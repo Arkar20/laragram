@@ -14,7 +14,7 @@ class ImageUpload extends Component
 
     public $photos;
     public Ablum $ablum;
-    public $rules = ['photos' => 'required'];
+    public $rules = ['photos' => 'required|mimes:jpg,jpeg,png'];
 
     public function updated($propertyName)
     {
